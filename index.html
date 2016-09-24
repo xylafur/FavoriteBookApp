@@ -103,11 +103,9 @@
      this.setState({title: tit});
    },
    render: function(){
-     this.setState({title: this.props.bookName});
-     this.setState({author: this.props.authorName});
      return (<div>
-               <h3>{this.state.title}</h3>
-               <p>{this.state.author}</p>
+               <h3>{this.props.bookName}</h3>
+               <p>{this.props.authorName}</p>
              </div>);
    }
  });
@@ -118,7 +116,8 @@
    getInitialState: function(){
      return{
        books: [
-         "DT"
+         {title: "Dark Tower", author: "Stephen King"},
+         {title: "LOTR", author: "Tolkien"}
        ]
      };
    },
@@ -128,7 +127,8 @@
        {
           this.state.books.map(
               function(element, i){
-                  return (<Book bookName = "Generix" authorName = "Geberix"/>);
+                  return (<Book bookName= {element.title}  authorName={element.author}></Book>);
+                  //return <p> FUCK</p>
               })
         }
        </div>
