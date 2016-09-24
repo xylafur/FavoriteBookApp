@@ -7,22 +7,27 @@
     <script src="https://unpkg.com/react@15.3.2/dist/react.js"></script>
     <script src="https://unpkg.com/react-dom@15.3.2/dist/react-dom.js"></script>
     <script src="https://unpkg.com/babel-core@5.8.38/browser.min.js"></script>
-    <script src="jquery-1.12.4.min.js"></script>
     <script src ="bookGenerator.js" type="text/babel" ></script>
+    <script src="jquery-1.12.4.min.js"></script>
+
 </head>
 <body>
   <h1>Favorite Book App</h1>
   <div id="create"></div>
   <div id = "display"></div>
 
-  <script  type="text/babel" >
+  <script type="text/babel" >
 
-  //creating a book class to store all the created values
-  function book(title, author){
-    this.title = title;
-    this.author = author;
-  }
 
+  //used to hold all the user created books
+
+  //alert("working");
+
+  var Fuck = React.createClass({
+    render: function(){
+      return (<h2>FUCKFUCK</h2>);
+    }
+  });
 
 
   //used to create the input box for Books/ Authors
@@ -83,38 +88,63 @@
     }
   });
 
-  /*
-  var inputDisplay = (<div
-    <h1>
-      Add a favorite book.
-    </h1>
-    <form id="form1" action="index.html" >
-        Book Title: <input type="text" id = "bookName" value="Enter a Book!">
-      <br>
-        Author: <input type = "text" id = "authorName" value = "Enter a Author!">
-      <br>
-        <button id="fuck">Post a book!</button>
-    </form>
-  </div>);
+ //Each individual book object
+ var Book = React.createClass({
+   getInitialState: function(){
+     return{
+       title: "Book title",
+       author: "Book Author"
+     };
+   },
+   changeAuthor: function(auth){
+     this.setState({author: auth}) ;
+   },
+   changeTitle: function(tit){
+     this.setState({title: tit});
+   },
+   render: function(){
+     this.setState({title: this.props.bookName});
+     this.setState({author: this.props.authorName});
+     return (<div>
+               <h3>{this.state.title}</h3>
+               <p>{this.state.author}</p>
+             </div>);
+   }
+ });
 
-  document.getElementById("fuck").onclick = function(){
-    if(document.getElementById("bookName").value === "Enter a Book!"
-        || document.getElementById("authorName").value === "Enter a Author!"){
-          alert("Please enter a book and an author.")
+
+ var BookList = React.createClass({
+
+   getInitialState: function(){
+     return{
+       books: [
+         "DT"
+       ]
+     };
+   },
+   render: function(){
+     return(
+       <div className="favBooks">
+       {
+          this.state.books.map(
+              function(element, i){
+                  return (<Book bookName = "Generix" authorName = "Geberix"/>);
+              })
         }
-    else{
-      bookName = document.getElementById("bookName").value;
-      authorName = document.getElementById("authorName").value;
-      alert(bookName + " by " + authorName);
-    }
-  };
-  */
+       </div>
+     );
+   }
+
+ });
+
 
   ReactDOM.render(
-    <div>
+    (<div>
       <TextCreator/>
-    </div>
+      <BookList/>
+    </div>)
     , document.getElementById('display'));
+
 </script>
 
 </body>
