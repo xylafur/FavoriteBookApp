@@ -1,99 +1,97 @@
-
-//creating a book class to store all the created values
-function book(title, author){
-  this.title = title;
-  this.author = author;
-}
-
-
-
-//used to create the input box for Books/ Authors
-var BookText = React.createClass({
-    getInitialState: function(){
-      return {value: "Enter a book!"};
-    },
-    handleChange: function(event){
-      this.setState({value: event.target.value});
-    },
-    clearField: function(event){
-      this.setState({value: ""});
-    },
-    render: function(){
-      return <input type = "text" value = {this.state.value}
-      onChange ={this.handleChange} onClick = {this.clearField}/>
-    }
-});
-var AuthorText = React.createClass({
+//class that displays the add favorite book text/ form
+var TextCreator = React.createClass({
+  updateList: function(){
+    this.props.addBook( this.refs.titleValue.value, this.refs.authorValue.value);
+  },
   getInitialState: function(){
-    //if(id === "book")
       return {value: "Enter an author!"};
-    //else
-    //return {value: "Enter an author!"};
   },
   handleChange: function(event){
     this.setState({value: event.target.value});
   },
   clearField: function(event){
-    //if(value === "Enter a book!")
       this.setState({value: "" });
   },
   render: function(){
-    return (
-      <input type = "text" value = {this.state.value}
-      onChange ={this.handleChange} onClick = {this.clearField}/>
-    );
-  }
-});
-
-//class that displays the add favorite book text/ form
-var TextCreator = React.createClass({
-  newBook: function(){
-      alert("functionWorks");
-  },
-  render: function(){
     return (<div>
-              <h1>
+              <h2>
                 Add a favorite book.
-              </h1>
-              <form id="form1" action="index.html" >
-                <BookText/><br/>
-                <AuthorText/><br/>
-                <button onClick = "newBook">Post your book!</button>
+              </h2>
+              <form id="form1" >
+
+              <input type = "text" ref = "titleValue" value = {this.state.value}
+              onChange ={this.handleChange} onClick = {this.clearField}/><br/>
+
+              <input ref = "authorValue" type = "text" value = {this.state.value}
+              onChange ={this.handleChange} onClick = {this.clearField}/><br/>
+
+
+                <button onClick = {this.updateList}>
+                  Post your book!
+                </button>
 
               </form>
             </div>);
   }
 });
 
-/*
-var inputDisplay = (<div
-  <h1>
-    Add a favorite book.
-  </h1>
-  <form id="form1" action="index.html" >
-      Book Title: <input type="text" id = "bookName" value="Enter a Book!">
-    <br>
-      Author: <input type = "text" id = "authorName" value = "Enter a Author!">
-    <br>
-      <button id="fuck">Post a book!</button>
-  </form>
-</div>);
+//Each individual book object
+var Book = React.createClass({
+ getInitialState: function(){
+   return{
+     title: "Book title",
+     author: "Book Author"
+   };
+ },
+ changeAuthor: function(auth){
+   this.setState({author: auth}) ;
+ },
+ changeTitle: function(tit){
+   this.setState({title: tit});
+ },
+ render: function(){
+   return (<div>
+             <h3>{this.props.bookName}</h3>
+             <p>{this.props.authorName}</p>
+           </div>);
+ }
+});
 
-document.getElementById("fuck").onclick = function(){
-  if(document.getElementById("bookName").value === "Enter a Book!"
-      || document.getElementById("authorName").value === "Enter a Author!"){
-        alert("Please enter a book and an author.")
+
+var BookList = React.createClass({
+
+ getInitialState: function(){
+   return{
+     books: [
+       {title: "Dark Tower", author: "Stephen King"},
+       {title: "LOTR", author: "Tolkien"}
+     ]
+   };
+ },
+ addBook: function(bookTitle, bookAuthor){
+    var arr = this.state.books;
+    arr.push( {title: bookTitle, author: bookAuthor});
+    this.setState({books: arr});
+ },
+ render: function(){
+   return(
+     <div className="favBooks">
+     <TextCreator addBook = {this.addBook}/>
+     {
+        this.state.books.map(
+            function(element, i){
+                return (<Book bookName= {element.title}  authorName={element.author}></Book>);
+            })
       }
-  else{
-    bookName = document.getElementById("bookName").value;
-    authorName = document.getElementById("authorName").value;
-    alert(bookName + " by " + authorName);
-  }
-};
-*/
+     </div>
+   );
+ }
+
+});
+
 
 ReactDOM.render(
-  <div>
-    <TextCreator/>
-  </div>
+  (<div>
+    <BookList/>
+  </div>)
   , document.getElementById('display'));

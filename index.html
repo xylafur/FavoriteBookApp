@@ -18,20 +18,9 @@
 
   <script type="text/babel" >
 
-
-  //used to hold all the user created books
-
-  //alert("working");
-
-
-
-  //used to create the input box for Books/ Authors
-
   //class that displays the add favorite book text/ form
   var TextCreator = React.createClass({
     updateList: function(){
-      //alert("Updating list..");
-      //alert(this.refs.titleValue.value);
       this.props.addBook( this.refs.titleValue.value, this.refs.authorValue.value);
     },
     getInitialState: function(){
@@ -41,7 +30,6 @@
       this.setState({value: event.target.value});
     },
     clearField: function(event){
-      //if(value === "Enter a book!")
         this.setState({value: "" });
     },
     render: function(){
@@ -106,7 +94,6 @@
       this.setState({books: arr});
    },
    render: function(){
-     //alert(this.state.books.length);
      return(
        <div className="favBooks">
        <TextCreator addBook = {this.addBook}/>
