@@ -12,7 +12,7 @@ getInitialState: function(){
  };
 },
 render: function(){
- return (<div>
+ return (<div className = "bookObjects">
            <h3>{this.props.bookName}</h3>
            <p>{this.props.authorName}</p>
          </div>);
@@ -43,7 +43,7 @@ render: function(){
 
     <input type="text" ref = "bookName" book = {this.state.book} onChange = {this.handleChange}/><br/>
    <input type="text" ref = "authorName" auth = {this.state.auth} onChange = {this.handleChange}/><br/>
-   <button onClick = {this.addBook}>Add Favorite Book</button>
+   <button className = "submitButton" onClick = {this.addBook}>Add Favorite Book</button>
    {
       this.state.books.map(
           function(element, i){
